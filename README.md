@@ -192,10 +192,15 @@ Guardo na variável claims da classe Claims;
 
 Retorno o subject para pegar o id de volta. Preciso parsear para Long, pois tudo no token é uma String `return Long.parseLong(claims.getSubject());`
 
+- Preciso recuperar este usuário no banco de dados;
 
+Na classe AutenticacaoViaTokenFilter, preciso injetar o UsuarioRepository via construtor;
 
+Na classe `SecurityConfigurations`, injetaremos via atributo o `usuarioRepository` e atualizaremos o construtor `AutenticacaoViaTokenFilter(tokenService, usuarioRepository)`;
 
+Recupero o usuario com o metodo `findById(idUsuario)`;
 
+Autentico o usuario
 
 Para indicar ao Spring Security que o cliente está autenticado, devemos utilizar a classe SecurityContextHolder, chamando o método `SecurityContextHolder.getContext().setAuthentication(authentication)`.
 

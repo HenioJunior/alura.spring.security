@@ -44,6 +44,7 @@ public class TokenService {
 
     public Long getIdUsuario(String token) {
         Claims claims = Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody();
+        System.out.println("---> claims: " + claims.getSubject());
         return Long.parseLong(claims.getSubject());
     }
 }
