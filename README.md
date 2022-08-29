@@ -66,6 +66,38 @@
 - Criação da classe DTO `LoginForm`LoginForm
 - Liberar o caminho `/auth` em SecurityConfigurations
 
+- Injetar o `AuthenticationManager`, pois como não estamos mais utilizando o formulário do Spring, faremos essa chamada para a autenticação manualmente;
+Só que esta classe não vem configurada para a injeção de dependência.
+
+Precisamos ir em `SecurityConfigurations`
+A classe `WebSecurityConfigurerAdapter` tem um método que sabe criar o `AuthenticationManager`;
+
+Vamos sobreescrever o método `protected AuthenticationManager authenticationManager()`;
+Precisamos anotar com `@Bean` Com isso o Spring sabe que este método devolve o AuthenticationManager e com isso conseguimos injetar no Controller;
+
+- Voltando ao método `ResponseEntity<?> autenticar(@RequestBody @Valid LoginForm form)`
+
+Preciso de um objeto do tipo `UsernamePasswordAuthenticationToken` que vai receber dadosLogin convertidos pelo método `form.converter()`, pois precisamos dos dados de login. Não posso passar o LoginForm e nem o login/senha solta...
+
+Vamos chamar um método do tipo `Authentication authManager.authenticate(dadosLogin)`
+
+Quando o Spring chamar a linha acima, o Spring vai ler as configurações e sabe que é para chamar o `AutenticacaoService` que chama o Repository para consultar o dados de login no banco
+
+Implemento um tratamento para o caso de Exception
+
+Com isso a autenticação esta implementada
+
+
+
+
+
+
+
+
+
+
+
+
 
  
 
