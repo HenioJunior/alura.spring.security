@@ -163,6 +163,16 @@ Antes de fazer a autenticação `UsernamePasswordAuthenticationFilter.class` rod
 
 - No método `doFilterInternal()` chamaremos o método `isTokenValido()` que sera guardado na variavel do tipo Boolean valido;
 
+### Criando a logica no método isTokenValido
+
+- Usaremos a classe Jwts para chamar o método `parser().setSigningKey(this.secret).parseClaimsJws(token)`
+
+`this.secret`: chave que usamos para criptografar e descriptografar configurada em `application.properties`
+
+`parseClaimsJws(token)`: recuperar o token e as informações que eu configurei com o `.builder()`; 
+
+- Se o token for inválido vai jogar uma exception, por isso faremos um tratamento nesta lógica com try/catch;
+
 
 
 

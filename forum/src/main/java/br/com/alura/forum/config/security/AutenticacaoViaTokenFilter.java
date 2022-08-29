@@ -26,6 +26,7 @@ public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
         System.out.println("-----> recuperarToken: " + token);
 
         boolean valido = tokenService.isTokenValido(token);
+        System.out.println("-----> eValido?: " + valido);
 
         filterChain.doFilter(request, response);
     }

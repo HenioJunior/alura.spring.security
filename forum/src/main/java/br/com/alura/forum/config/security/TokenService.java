@@ -33,6 +33,11 @@ public class TokenService {
     }
 
     public boolean isTokenValido(String token) {
-        return false;
+        try {
+            Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
