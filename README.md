@@ -150,13 +150,10 @@ Implementação do método abstrato `protected void doFilterInternal(HttpServlet
 - Caso o token esteja ok `return token.substring(7, token.length());`
 substring é para capturar o token sem o `Bearer `;
 
+- Para habilitar o filtro no Spring Security, devemos chamar o método `and().addFilterBefore(new AutenticacaoViaTokenFilter(), UsernamePasswordAuthenticationFilter.class)`;
+Antes de fazer a autenticação `UsernamePasswordAuthenticationFilter.class` rode o nosso filtro para pegar o token;
 
 
-
-
-
-
-Para habilitar o filtro no Spring Security, devemos chamar o método and().addFilterBefore(new AutenticacaoViaTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
 Para indicar ao Spring Security que o cliente está autenticado, devemos utilizar a classe SecurityContextHolder, chamando o método SecurityContextHolder.getContext().setAuthentication(authentication).
 
