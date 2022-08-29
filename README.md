@@ -141,9 +141,20 @@ Para criar um filtro no Spring, devemos criar uma classe(AutenticacaoViaTokenFil
 
 Implementação do método abstrato `protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)`;
 
+1º passo recuperar o token JWT da requisição no filter, criar um método privado `recuperarToken(HttpServletRequest request)`;
+
+- Devemos chamar o método `request.getHeader("Authorization");` e guardar na variavel `String token`;
+
+- Precisamos verificar se o cabeçalho esta correto`if (token == null || token.isEmpty() || !token.startsWith("Bearer "))`;
+
+- Caso o token esteja ok `return token.substring(7, token.length());`
+substring é para capturar o token sem o `Bearer `;
 
 
-Para recuperar o token JWT da requisição no filter, devemos chamar o método request.getHeader("Authorization");
+
+
+
+
 
 Para habilitar o filtro no Spring Security, devemos chamar o método and().addFilterBefore(new AutenticacaoViaTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
