@@ -88,6 +88,32 @@ Implemento um tratamento para o caso de Exception
 Com isso a autenticação esta implementada
 
 
+### Precisamos devolver um Token
+
+Antes de devolver um ok `return ResponseEntity.ok().build();` preciso gerar um token;
+
+Para a geração do token utilizaremos a biblioteca `jjwt`;
+
+Criação do método `tokenService.gerarToken(authentication);` na classe `TokenService` que será injetada no Controller;
+
+#### Na classe TokenService;
+
+Preciso injetar os atributos expiration e secret que configurei em `application.properties` com a anotação `@Value`para serem utilizados durante a criação do token;
+
+- No método `gerarToken(authentication)`
+
+O parâmetro authentication tem o método `getPrincipal()` para recuperar o usuário que esta logado. Ele devolve um Object e com isso, é necessário o cast para Usuario;
+
+- Vamos utilizar a api do jjwt para a geração do token;
+
+`Jwts.builder()`é um método utilizado para construir o token;
+a propriedade `compact()` transforma para uma String;
+
+
+
+
+
+
 
 
 
