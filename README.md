@@ -53,10 +53,21 @@
 
 #### Configurando autenticação Stateless
 
-- Instalação da dependencia `<groupId>io.jsonwebtoken</groupId>`
-- Em SecurityConfigurations `void configure(HttpSecurity http)`
-    inclusão do método `.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);` Com isso, o projeto não criará session, pois iremos utilizar token;
-    Perdemos o Controller nativo do Spring --> Necessário a criação;
+- Em uma API Rest, não é uma boa prática utilizar autenticação com o uso de session;
+- Uma das maneiras de fazer autenticação stateless é utilizando tokens JWT (Json Web Token);
+
+- Para utilizar JWT na API, devemos adicionar a dependência da biblioteca jjwt no arquivo pom.xml do projeto --> `<groupId>io.jsonwebtoken</groupId>`
+
+- Para configurar a autenticação stateless no Spring Security, devemos utilizar o método 
+`.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);` localizado em SecurityConfigurations `void configure(HttpSecurity http)`
+   
+- Perdemos o Controller nativo do Spring. Com isso, é necessário a criação do AutenticacaoController;
+
+### Para disparar manualmente o processo de autenticação no Spring Security, devemos utilizar a classe AuthenticationManager;
+
+Para poder injetar o AuthenticationManager no controller, devemos criar um método anotado com @Bean, na classe SecurityConfigurations, que retorna uma chamada ao método super.authenticationManager();
+
+
 
 ### Criação do `AutenticacaoController`
 
@@ -92,7 +103,7 @@ Com isso a autenticação esta implementada
 
 Antes de devolver um ok `return ResponseEntity.ok().build();` preciso gerar um token;
 
-Para a geração do token utilizaremos a biblioteca `jjwt`;
+Para criar o token JWT, devemos utilizar a classe Jwts da biblioteca `jjwt`;
 
 Criação do método `tokenService.gerarToken(authentication);` na classe `TokenService` que será injetada no Controller;
 
@@ -115,6 +126,8 @@ a propriedade `compact()` transforma para uma String;
 - `No ResponseEntity.ok(new TokenDto(token, "Bearer"))`
 devolverei um objeto(token) no corpo da resposta;
 junto com o token preciso informar o tipo de autenticação(Bearer);
+
+Bearer é um dos mecanismos de autenticação utilizados no protocolo HTTP, tal como o Basic e o Digest.
 
 
 
