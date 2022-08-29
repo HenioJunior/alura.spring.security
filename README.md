@@ -27,7 +27,7 @@
 
 #### Ensinando o Spring: Como logar no sistema?
 
- - Criação da classe responsável pela lógica de autenticação --> security/AutenticacaoService
+- Criação da classe responsável pela lógica de autenticação --> security/AutenticacaoService
 
     Esta classe será gerenciada pelo Spring anotação --> @Service
     
@@ -42,6 +42,12 @@
          O controller de autenticação é do próprio Spring
           <br />
 
+### Em SecurityConfigurations
+
+- injetar a AutenticacaoService;
+- Criação do método `void configure(AuthenticationManagerBuilder auth)`;
+- chamar o método `auth.userDetailsService()`;
+- chamada do método `.passwordEncoder(new BCryptPasswordEncoder())` qual o algoritmo de geração de hash para a senha;
 
  
 
