@@ -2,6 +2,8 @@ package br.com.alura.forum.config.security;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -28,7 +30,18 @@ public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
         boolean valido = tokenService.isTokenValido(token);
         System.out.println("-----> eValido?: " + valido);
 
+        if(valido) {
+            autenticarCliente(token);
+        }
+
         filterChain.doFilter(request, response);
+    }
+
+    private void autenticarCliente(String token) {
+
+        Long idUsuario = tokenService.getIdUsuario(token);
+
+
     }
 
     private String recuperarToken(HttpServletRequest request) {

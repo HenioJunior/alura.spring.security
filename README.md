@@ -159,6 +159,9 @@ Antes de fazer a autenticação `UsernamePasswordAuthenticationFilter.class` rod
 
 - Na classe AutenticacaoViaTokenFilter, precisaremos injetar o TokenService via construtor;
 
+Por que não é possível fazer injeção de dependências com a anotação @Autowired na classe AutenticacaoViaTokenFilter? Porque ela não é um bean gerenciado pelo Spring
+
+
 - Na classe `SecurityConfigurations`, injetaremos via atributo o `TokenService` e atualizaremos o construtor `AutenticacaoViaTokenFilter(tokenService)`;
 
 - No método `doFilterInternal()` chamaremos o método `isTokenValido()` que sera guardado na variavel do tipo Boolean valido;
@@ -174,9 +177,27 @@ Antes de fazer a autenticação `UsernamePasswordAuthenticationFilter.class` rod
 - Se o token for inválido vai jogar uma exception, por isso faremos um tratamento nesta lógica com try/catch;
 
 
+### Autenticando o cliente via Spring Security
+
+- Liberar a requisição para o recurso solicitado;
+
+#### Criação do método `autenticarCliente()`
+
+- Preciso recuperar os dados do usuario que estão no token;
+Criação do método `tokenService.getIdUsuario(token)` da classe TokenService;
+Uso a classe Jwts para chamar o método `parser().setSigningKey(this.secret).parseClaimsJws(token).getbody()`
+`getBody()` devolve o corpo do objeto(token);
+
+Guardo na variável claims da classe Claims;
+
+Retorno o subject para pegar o id de volta. Preciso parsear para Long, pois tudo no token é uma String `return Long.parseLong(claims.getSubject());`
 
 
-Para indicar ao Spring Security que o cliente está autenticado, devemos utilizar a classe SecurityContextHolder, chamando o método SecurityContextHolder.getContext().setAuthentication(authentication).
+
+
+
+
+Para indicar ao Spring Security que o cliente está autenticado, devemos utilizar a classe SecurityContextHolder, chamando o método `SecurityContextHolder.getContext().setAuthentication(authentication)`.
 
 
 
