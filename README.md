@@ -56,7 +56,16 @@
 - Instalação da dependencia `<groupId>io.jsonwebtoken</groupId>`
 - Em SecurityConfigurations `void configure(HttpSecurity http)`
     inclusão do método `.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);` Com isso, o projeto não criará session, pois iremos utilizar token;
-    Perdemos o Controller nativo do Spring --> Necessário a criação
+    Perdemos o Controller nativo do Spring --> Necessário a criação;
+
+### Criação do `AutenticacaoController`
+
+- Criação do método `ResponseEntity<?> autenticar(@RequestBody @Valid LoginForm form)`
+    O objetivo deste método é pegar o login e a senha, autenticar no sistema(verificar no banco) e estando tudo ok eu gero o token;
+
+- Criação da classe DTO `LoginForm`LoginForm
+- Liberar o caminho `/auth` em SecurityConfigurations
+
 
  
 
