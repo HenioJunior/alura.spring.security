@@ -22,10 +22,29 @@
 
  - Na classe Usuario, criar a cardinalidade @ManyToMany no atributo perfis
     Um usuario pode ter vários perfis e vice versa
-    Por padrão na Jpa todo o relacionamento toMany, se eu carregar do banco de dados\n
+    No Jpa, todo o relacionamento toMany tem o LAZY como fetch padrão.
+    ex: Se eu carregar do banco de dados o usuario ele nao carrega a lista de Perfis. Para isso o fetch precisa ser EAGER --> @ManyToMany(fetch = FetchType.EAGER)
+
+#### Ensinando o Spring: Como logar no sistema?
+
+ - Criação da classe responsável pela lógica de autenticação --> security/AutenticacaoService
+
+    Esta classe será gerenciada pelo Spring anotação --> @Service
     
-    o usuario ele nao carrega a lista de Perfis porque é LAZY
-    Para isso o fetch precisa ser EAGER --> @ManyToMany(fetch = FetchType.EAGER)
+- implementar a interface UserDetailsService
+        implementação do método loadUserByUsername()
+        ##Explicação: No form Login, qdo clicar no botão "Sign in", o Spring vai saber que esta <br/>
+        é a classe de Autenticação(AutenticacaoService) e vai chamar o método loadUserByUserame()
+
+- Criação do UsuarioRepository para fazer a pesquisa no banco e injetar na classe AutenticacaoService
+        Criação da assinatura do método -> `Optional<Usuario> findByEmail(String email);` <br />
+         <br /> 
+         O controller de autenticação é do próprio Spring
+          <br />
+
+
+ 
+
 
 
 
