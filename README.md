@@ -150,8 +150,19 @@ Implementação do método abstrato `protected void doFilterInternal(HttpServlet
 - Caso o token esteja ok `return token.substring(7, token.length());`
 substring é para capturar o token sem o `Bearer `;
 
-- Para habilitar o filtro no Spring Security, devemos chamar o método `and().addFilterBefore(new AutenticacaoViaTokenFilter(), UsernamePasswordAuthenticationFilter.class)`;
+- O filtro deve ser registrado via método `and().addFilterBefore(new AutenticacaoViaTokenFilter(), UsernamePasswordAuthenticationFilter.class)` na classe SecurityConfigurations;
 Antes de fazer a autenticação `UsernamePasswordAuthenticationFilter.class` rode o nosso filtro para pegar o token;
+
+### Validando o token
+
+- Na classe TokenService criaremos o método para validar o token `isTokenValido(String token)`
+
+- Na classe AutenticacaoViaTokenFilter, precisaremos injetar o TokenService via construtor;
+
+- Na classe `SecurityConfigurations`, injetaremos via atributo o `TokenService` e atualizaremos o construtor `AutenticacaoViaTokenFilter(tokenService)`;
+
+- No método `doFilterInternal()` chamaremos o método `isTokenValido()` que sera guardado na variavel do tipo Boolean valido;
+
 
 
 
