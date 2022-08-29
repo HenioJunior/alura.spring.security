@@ -88,7 +88,7 @@ Implemento um tratamento para o caso de Exception
 Com isso a autenticação esta implementada
 
 
-### Precisamos devolver um Token
+### Criação do Token
 
 Antes de devolver um ok `return ResponseEntity.ok().build();` preciso gerar um token;
 
@@ -108,6 +108,17 @@ O parâmetro authentication tem o método `getPrincipal()` para recuperar o usu�
 
 `Jwts.builder()`é um método utilizado para construir o token;
 a propriedade `compact()` transforma para uma String;
+
+### Devolvendo o token para o cliente
+
+- Criação do `TokenDto`;
+- `No ResponseEntity.ok(new TokenDto(token, "Bearer"))`
+devolverei um objeto(token) no corpo da resposta;
+junto com o token preciso informar o tipo de autenticação(Bearer);
+
+
+
+
 
 
 
