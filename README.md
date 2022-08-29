@@ -49,6 +49,15 @@
 - chamar o método `auth.userDetailsService()`;
 - chamada do método `.passwordEncoder(new BCryptPasswordEncoder())` qual o algoritmo de geração de hash para a senha;
 
+### Gerando token com JWT
+
+#### Configurando autenticação Stateless
+
+- Instalação da dependencia `<groupId>io.jsonwebtoken</groupId>`
+- Em SecurityConfigurations `void configure(HttpSecurity http)`
+    inclusão do método `.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);` Com isso, o projeto não criará session, pois iremos utilizar token;
+    Perdemos o Controller nativo do Spring --> Necessário a criação
+
  
 
 
