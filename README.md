@@ -127,7 +127,30 @@ a propriedade `compact()` transforma para uma String;
 devolverei um objeto(token) no corpo da resposta;
 junto com o token preciso informar o tipo de autenticação(Bearer);
 
-Bearer é um dos mecanismos de autenticação utilizados no protocolo HTTP, tal como o Basic e o Digest.
+- Bearer é um dos mecanismos de autenticação utilizados no protocolo HTTP, tal como o Basic e o Digest;
+
+Para enviar o token JWT na requisição, é necessário adicionar o cabeçalho Authorization, passando como valor Bearer token;
+
+### Recuperando o token do header Authorization
+
+#### Chegou a requisição com o token -> recuperar/validar o token -> autenticar o usuario antes de prosseguir com a requisição
+
+- Interceptar a requisição com o uso de filtro;
+
+Para criar um filtro no Spring, devemos criar uma classe(AutenticacaoViaTokenFilter) que herda da classe OncePerRequestFilter;
+
+Implementação do método abstrato `protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)`;
+
+
+
+Para recuperar o token JWT da requisição no filter, devemos chamar o método request.getHeader("Authorization");
+
+Para habilitar o filtro no Spring Security, devemos chamar o método and().addFilterBefore(new AutenticacaoViaTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+
+Para indicar ao Spring Security que o cliente está autenticado, devemos utilizar a classe SecurityContextHolder, chamando o método SecurityContextHolder.getContext().setAuthentication(authentication).
+
+
+
 
 
 
